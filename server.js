@@ -15,10 +15,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex({
     client: 'pg',
     connection: {
-        host: 'localhost',
-        user: DB_USER,
-        password: DB_PASSWORD,
-        database: 'smart-brain'
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
     }
 });
 
@@ -35,6 +33,6 @@ app.put('/image', image.handleImage(db))
 app.post('/imageurl', image.handleApiCall)
 
 
-app.listen(3001, () =>{
+app.listen(process.env.PORT || 3001, () =>{
     console.log("App is running");
 });
